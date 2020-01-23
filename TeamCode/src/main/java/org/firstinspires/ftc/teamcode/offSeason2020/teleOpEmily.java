@@ -11,12 +11,13 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 public class teleOpEmily extends OpMode{
     private DcMotor demiseArm;
+    private double tolerance = 0.5;
 
 @Override
 
     public void init(){
-        demiseArm = hardwareMap.get(DcMotor.class, "demiseArm");
-    }
+        demiseArm = hardwareMap.get(DcMotor.class, "demiseArm"); }
+
     public void loop(){
         if (gamepad1.left_stick_y < 0){ //Forwards
 
@@ -31,19 +32,17 @@ public class teleOpEmily extends OpMode{
         }
         if(gamepad1.right_stick_x < 0){ //Turning Left
 
-            demiseArm.setPower(-.7);
-            demiseArm.setPower(-.7);
+            demiseArm.setPower((gamepad1.right_stick_x));
 
         }
 
         if(gamepad1.right_stick_x > 0){ //Turning Right
 
-            demiseArm.setPower(.7);
-            demiseArm.setPower(.7);
+            demiseArm.setPower((gamepad1.right_stick_x));
 
         }
 
-        if(gamepad1.left_stick_y == 0 || gamepad1.right_stick_y == 0) {
+        if(Math.abs(gamepad1.left_stick_x) <= tolerance  || Math.abs(gamepad1.right_stick_x) <= tolerance || Math.abs(gamepad1.left_stick_y) <= tolerance || Math.abs(gamepad1.right_stick_y) <= tolerance) {
             demiseArm.setPower(0);
         }
     }
